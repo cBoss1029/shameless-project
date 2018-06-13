@@ -21,12 +21,17 @@ export default class HomeScreen extends React.Component{
         }, err => {console.log(err)})
     }
 
+    renderMap=()=>{
+        if(this.state.userLocation){
+            return <MapView style = {styles.map}
+            region = {this.state.userLocation}/>
+        }
+    }
+
     render(){
         return(
             <View style = {styles.mapContainer}>
-                <MapView 
-                style = {styles.map}
-                region = {this.state.userLocation}/>
+                {this.renderMap()}
             </View>
         )
     }
