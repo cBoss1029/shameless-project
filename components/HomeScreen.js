@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, Button} from 'react-native';
-import MapView from 'react-native-maps'
+import MapView from 'react-native-maps';
+import Marker from 'react-native-maps'
 
 export default class HomeScreen extends React.Component{
     constructor(props){
@@ -18,13 +19,16 @@ export default class HomeScreen extends React.Component{
                 latitudeDelta: .0622,
                 longitudeDelta: .0421
             }})
-        }, err => {console.log(err)})
+        }, err => {console.log(err)});
     }
 
     renderMap=()=>{
         if(this.state.userLocation){
             return <MapView style = {styles.map}
-            region = {this.state.userLocation}/>
+            region = {this.state.userLocation}>
+            <MapView.Marker coordinate = {this.state.userLocation}
+            title = 'you are here'/>
+            </MapView>
         }
     }
 
@@ -32,6 +36,7 @@ export default class HomeScreen extends React.Component{
         return(
             <View style = {styles.mapContainer}>
                 {this.renderMap()}
+                <Button style = {styles.button} title = 'Place Order' color = '#20603d'onPress = {()=>{}}/>
             </View>
         )
     }
@@ -39,11 +44,21 @@ export default class HomeScreen extends React.Component{
 
 const styles = StyleSheet.create({
     mapContainer: {
-        width: '100%',
-        height: '100%'
+        flex: 1,
     },
     map: {
+        width: "100%",
+        height: "90%",
+        zIndex: -1,
+    },
+    button: {
+        zIndex: 10,
+        position: 'absolute',
+        top: 10,
+        left: 10,
         width: '100%',
-        height: '100%'
+        height: 20
+        
+
     }
 })
