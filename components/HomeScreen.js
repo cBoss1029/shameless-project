@@ -10,6 +10,9 @@ export default class HomeScreen extends React.Component{
             userLocation: null,
         }
     }
+    static navigationOptions = {
+        header: null
+    }
 
     componentDidMount(){
         navigator.geolocation.getCurrentPosition(position => {
@@ -36,7 +39,7 @@ export default class HomeScreen extends React.Component{
         return(
             <View style = {styles.mapContainer}>
                 {this.renderMap()}
-                <Button style = {styles.button} title = 'Place Order' color = '#20603d'onPress = {()=>{}}/>
+                <Button style = {styles.button} title = 'Place Order' color = '#20603d'onPress = {()=>{this.props.navigation.openDrawer()}}/>
             </View>
         )
     }

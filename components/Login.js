@@ -1,5 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { NavigationActions } from 'react-navigation'
+import HomeScreen from './HomeScreen';
+
 
 export default class Login extends React.Component{
     constructor(props){
@@ -7,15 +10,21 @@ export default class Login extends React.Component{
         this.state = {
             username: '',
             password: '',
-        }
+        }    
     }
+    static navigationOptions = {
+        header: null
+    }
+    
     render(){
+        const { navigation } = this.props
+
         return(
             <View style = {styles.container}>
                 <Text style = {styles.title}>Shamless</Text>
                 <TextInput style = {styles.text} onChangeText = {(text) => {this.setState({username: text})}} placeholder = 'Username'></TextInput>
                 <TextInput style = {styles.text} onChangeText = {(text) => {this.setState({password: text})}} placeholder = 'Password' secureTextEntry = {true}></TextInput>
-                <Button containerViewStyle = {{width: '100%', margin: 0}}color = '#20603d' title = 'Login' onPress = {() =>{}}/>
+                <Button containerViewStyle = {{width: '100%', margin: 0}}color = '#20603d' title = 'Login' onPress = {() =>{navigation.navigate('FirstView')}}/>
 
             </View>
         )
