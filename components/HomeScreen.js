@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, Button} from 'react-native';
 import MapView from 'react-native-maps';
-import Marker from 'react-native-maps'
+
 
 export default class HomeScreen extends React.Component{
     constructor(props){
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         top: 10,
         left: 10,
         width: '100%',
-        height: 20
+        height: '10%'
         
 
     }
