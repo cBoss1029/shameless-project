@@ -1,9 +1,13 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, AsyncStorage } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 
 export default class DrawerContainer extends React.Component {
 
+  _signOutAsync = async() =>{
+    await AsyncStorage.clear();
+    this.props.navigation.navigate('Auth'); 
+  }
   render() {
     const { navigation } = this.props
     return (
@@ -28,11 +32,11 @@ export default class DrawerContainer extends React.Component {
           style={styles.uglyDrawerItem}>
           Settings
         </Text>
-        {/* <Text
-          onPress={() => navigation.navigate('FourthView')}
+        <Text
+          onPress={() => this._signOutAsync()}
           style={styles.uglyDrawerItem}>
-          Login
-        </Text> */}
+          Sign Out
+        </Text>
         
       </View>
     )
