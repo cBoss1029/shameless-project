@@ -1,20 +1,37 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, AsyncStorage } from 'react-native';
 import { NavigationActions } from 'react-navigation'
 import HomeScreen from './HomeScreen';
 
 
-export default class Login extends React.Component{
+export default class SignUp extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             username: '',
             password: '',
+            passwordConfirm: '',
         }    
     }
     static navigationOptions = {
         header: null
     }
+    confirmPassword=()=>{
+        if(this.state.password === this.state.passwordConfirm){
+            return true;
+        } else {
+            alert('Passwords do not match');
+            return false;
+        }
+    }
+    _signInAsync = async () => {
+        const tokenContents = {
+            username: this.state.username,
+            password: this.state.password
+        }
+        await AsyncStorage.setItem('userToken', tokenContents);
+        this.props.navigation.navigate('App');
+      };
     
     render(){
         const { navigation } = this.props
@@ -24,7 +41,8 @@ export default class Login extends React.Component{
                 <Text style = {styles.title}>Shamless</Text>
                 <TextInput style = {styles.text} onChangeText = {(text) => {this.setState({username: text})}} placeholder = 'Username'></TextInput>
                 <TextInput style = {styles.text} onChangeText = {(text) => {this.setState({password: text})}} placeholder = 'Password' secureTextEntry = {true}></TextInput>
-                <Button containerViewStyle = {{width: '100%', margin: 0}}color = '#20603d' title = 'Login' onPress = {() =>{navigation.navigate('FirstView')}}/>
+                <TextInput style = {styles.text} onChangeText = {(text) => {this.setState({passwordConfirm: text})}} placeholder = 'Confirm Password' secureTextEntry = {true}></TextInput>
+                <Button containerViewStyle = {{width: '100%', margin: 0}}color = '#20603d' title = 'Sign Up' onPress = {() =>{if(this.confirmPassword()){this._signInAsync}}}/>
 
             </View>
         )

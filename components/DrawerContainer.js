@@ -16,8 +16,23 @@ export default class DrawerContainer extends React.Component {
         <Text
           onPress={() => navigation.navigate('SecondView')}
           style={styles.uglyDrawerItem}>
-          Login
+          Payment
         </Text>
+        <Text
+          // onPress={() => navigation.navigate('SecondView')}
+          style={styles.uglyDrawerItem}>
+          Drive
+        </Text>
+        <Text
+          onPress={() => navigation.navigate('ThirdView')}
+          style={styles.uglyDrawerItem}>
+          Settings
+        </Text>
+        {/* <Text
+          onPress={() => navigation.navigate('FourthView')}
+          style={styles.uglyDrawerItem}>
+          Login
+        </Text> */}
         
       </View>
     )

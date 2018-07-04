@@ -16,6 +16,7 @@ export default class HomeScreen extends React.Component{
 
     componentDidMount(){
         navigator.geolocation.getCurrentPosition(position => {
+            console.log(position)
             this.setState({userLocation:{
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,

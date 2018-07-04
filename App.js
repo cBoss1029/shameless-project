@@ -1,48 +1,82 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Marker from 'react-native-maps'
-import {StackNavigator, DrawerNavigator} from 'react-navigation';
-import Login from './components/Login';
-import HomeScreen from './components/HomeScreen'
+import {StackNavigator, DrawerNavigator, SwitchNavigator} from 'react-navigation';
+import SignIn from './components/SignIn';
+import HomeScreen from './components/HomeScreen';
+import SignUp from './components/SignUp';
+import PaymentPrefs from './components/PaymentPrefs';
+import Settings from './components/Settings';
 import DrawerContainer from './components/DrawerContainer';
-const Stack = {
+import AuthLoadingScreen from './components/AuthLoadingScreen';
+const AppStack = {
 	FirstView: {
 		screen: HomeScreen
 	},
 	SecondView: {
-		screen: Login
+		screen: PaymentPrefs
 	},
+	ThirdView: {
+		screen: Settings
+	},
+	// FourthView: {
+	// 	screen: Login
+	// },
 
 };
+const AuthStack = StackNavigator({
+	SignIn: {
+		screen: SignIn
+	},
+	SignUp: {
+		screen: SignUp
+	}
+})
 
 const DrawerRoutes = {
 	FirstViewStack: {
 		name: 'FirstViewStack',
-		screen: StackNavigator(Stack, { initialRouteName: 'FirstView' })
+		screen: StackNavigator(AppStack, { initialRouteName: 'FirstView' })
 	},
 	SecondViewStack: {
 		name: 'SecondViewStack',
-		screen: StackNavigator(Stack, { initialRouteName: 'SecondView' })
+		screen: StackNavigator(AppStack, { initialRouteName: 'SecondView' })
 	},
+	ThirdViewStack: {
+		name: 'ThirdViewStack',
+		screen: StackNavigator(AppStack, { initialRouteName: 'ThirdView' })
+	},
+	// FourthViewStack: {
+	// 	name: 'FourthViewStack',
+	// 	screen: StackNavigator(AppStack, { initialRouteName: 'FourthView' })
+	// },
 	
 };
 
-const RootNavigator =
+const AppNavigator =
 	StackNavigator({
 		Drawer: {
 			name: 'Drawer',
 			screen: DrawerNavigator(
-        DrawerRoutes,
-        {contentComponent: DrawerContainer},
-
+        	DrawerRoutes,
+			{contentComponent: DrawerContainer},
 			),
 		},
-		...Stack
+		...AppStack
 	},
 		{
 			headerMode: 'none'
 		}
 	);
+	export default SwitchNavigator({
+		AuthLoading: AuthLoadingScreen,
+		App: AppNavigator,
+		Auth: AuthStack
+	},
+	{
+		initialRouteName: 'AuthLoading',
+	}
+);
 // const App = createDrawerNavigator(
 //   {
 //   Home: {
@@ -66,7 +100,7 @@ const RootNavigator =
 //     );
 //   }
 // }
-export default RootNavigator;
+// export default RootNavigator;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
