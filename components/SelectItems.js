@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator} from 'react-native';
 import products from '../products';
 import BundleItem from './BundleItem';
 import AddOnItem from './AddOnItem';
@@ -18,7 +18,9 @@ export default class SelectItems extends React.Component {
             ],
             selected: [
 
-            ]
+            ],
+            bundlesLoaded: false,
+            addOnsLoaded: false,
         }
 
     }
@@ -37,19 +39,40 @@ export default class SelectItems extends React.Component {
     }
     handleRemoveItem=(item)=>{
         let selectedItems = [...this.state.selected];
-        console.log('test')
         this.setState({selected: selectedItems.filter(i=>i!==item)});
     }
-
     loadBundles=()=>{
-        const {bundles} = products;
-        
-        let bundlesArr = [...this.state.bundles];
-        bundles.forEach((b,i)=>{
-            bundlesArr.push(b);
-            this.setState({bundles: bundlesArr})
-        });
+        fetch('/bundles', {
+            headers : { 
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+             },
+             method: 'GET',
+      
+          })
+        .then(res=> res.json())
+        .then((data)=> {
+            data.forEach(bundle => {
+            const newBundles = [...this.state.bundles, bundle]
+            this.setState({bundles: newBundles, bundlesLoaded: true})
+        })
+    }, (error) => {
+        this.setState({
+            bundlesLoaded: true, error
+        })
+    })
+
     }
+
+    // loadBundles=()=>{
+    //     const {bundles} = products;
+        
+    //     let bundlesArr = [...this.state.bundles];
+    //     bundles.forEach((b,i)=>{
+    //         bundlesArr.push(b);
+    //         this.setState({bundles: bundlesArr})
+    //     });
+    // }
     renderBundles(){
         if(this.state.bundles){
             return this.state.bundles.map((b,i)=>{
@@ -58,17 +81,39 @@ export default class SelectItems extends React.Component {
         }
 
     }
-
     loadAddOns=()=>{
-        const {addOns} = products;
-        console.log(addOns.length);
-        
-        let addOnsArr = [...this.state.addOns];
-        addOns.forEach((a,i)=>{
-            addOnsArr.push(a);
-            this.setState({addOns: addOnsArr})
-        });
+        fetch('/addOns', {
+            headers : { 
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+             },
+             method: 'GET',
+      
+          })
+        .then(res=> res.json())
+        .then((data)=> {
+            data.forEach(addOn => {
+            const newAddOns = [...this.state.addOns, addOn]
+            this.setState({addOns: newAddOns, addOnsLoaded: true})
+        })
+    }, (error) => {
+        this.setState({
+            addOnsLoaded: true, error
+        })
+    })
+
     }
+
+    // loadAddOns=()=>{
+    //     const {addOns} = products;
+    //     console.log(addOns.length);
+        
+    //     let addOnsArr = [...this.state.addOns];
+    //     addOns.forEach((a,i)=>{
+    //         addOnsArr.push(a);
+    //         this.setState({addOns: addOnsArr})
+    //     });
+    // }
     renderAddOns=()=>{
         if(this.state.addOns){
             return this.state.addOns.map((a,i)=>{
@@ -78,6 +123,9 @@ export default class SelectItems extends React.Component {
     }
 
     render(){
+        if(!this.state.bundlesLoaded || !this.state.addOnsLoaded){
+            return <ActivityIndicator/>
+        }
         return(
             <View style={styles.itemsContainer}>
                 <ScrollView style={styles.scrollView}>

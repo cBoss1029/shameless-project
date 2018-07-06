@@ -1,4 +1,4 @@
 let mongoose = require('mongoose');
-let schema = require('../schemas/Users');
+let schema = require('../schemas/Orders');
 
-module.exports =  mongoose.model('User', schema);
+module.exports =  mongoose.model('Order', schema);
