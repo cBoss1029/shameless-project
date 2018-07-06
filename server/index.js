@@ -8,6 +8,7 @@ const OrderRoutes = require('./routes/OrderRoutes');
 const UserRoutes = require('./routes/UserRoutes');
 const AddOn = require('./models/AddOn');
 const Bundle = require('./models/Bundle');
+const fetch = require('node-fetch');
 
 const app=express();
 
@@ -19,26 +20,26 @@ app.use(BundleRoutes);
 app.use(OrderRoutes);
 app.use(UserRoutes);
 
-let {bundles, addOns} = require('../products');
+// let {bundles, addOns} = require('../products');
 
-bundles.forEach((p)=>{
-    const body = {
-        name: p.name,
-        includes: p.includes,
-        description: p.description,
-        price: p.price,
-    }
-    fetch('/bundles',{
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    }).then(response=> response.json());
+// bundles.forEach((p)=>{
+//     const body = {
+//         name: p.name,
+//         includes: p.includes,
+//         description: p.description,
+//         price: p.price,
+//     }
+//     fetch('/bundles',{
+//         method: 'POST',
+//         body: JSON.stringify(body),
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json'
+//         }
+//     }).then(response=> response.json());
     
 
-})
+// })
 
 
 // addOns.forEach((p)=>{

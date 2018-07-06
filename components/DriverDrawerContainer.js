@@ -5,19 +5,19 @@ export default class DrawerContainer extends React.Component {
   constructor(){
     super();
     this.state = {
-      driverToggle: false,
+      driverToggle: true,
 
     }
   }
   handleDriverToggle=()=>{
-    if(this.state.driverToggle){
-        this.setState({driverToggle: false});
-        this.props.navigation.navigate('App')
-    } else if(!this.state.driverToggle){
-        this.setState({driverToggle: true});
-        this.props.navigation.navigate('Driver')
-    }
-}
+      if(this.state.driverToggle){
+          this.setState({driverToggle: false});
+          this.props.navigation.navigate('App')
+      } else if(!this.state.driverToggle){
+          this.setState({driverToggle: true});
+          this.props.navigation.navigate('Driver')
+      }
+  }
 
   _signOutAsync = async() =>{
     await AsyncStorage.clear();
@@ -31,11 +31,6 @@ export default class DrawerContainer extends React.Component {
           onPress={() => navigation.navigate('Home')}
           style={styles.uglyDrawerItem}>
           Home
-        </Text>
-        <Text
-          onPress={() => navigation.navigate('Payment')}
-          style={styles.uglyDrawerItem}>
-          Payment
         </Text>
         <View style={styles.toggleItem}>
           <Text style={styles.toggleItemText}>Drive</Text>

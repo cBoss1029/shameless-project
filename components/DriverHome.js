@@ -7,7 +7,9 @@ export default class HomeScreen extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            userLocation: null,
+            driverLocation: null,
+            ordersLocations: [],
+            ordersLoaded: false,
         }
     }
     static navigationOptions = {
@@ -15,8 +17,12 @@ export default class HomeScreen extends React.Component{
     }
 
     componentDidMount(){
+        this.loadOrders();
+        this.loadDriverLocation()
+    }
+    loadDriverLocation=()=>{
         navigator.geolocation.getCurrentPosition(position => {
-            this.setState({userLocation:{
+            this.setState({driverLocation:{
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
                 latitudeDelta: .0622,
@@ -24,13 +30,38 @@ export default class HomeScreen extends React.Component{
             }})
         }, err => {console.log(err)});
     }
+    
+    loadOrders=()=>{
+        fetch('http://192.168.1.82:3001/orders', {
+            headers : { 
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+             },
+             method: 'GET',
+      
+          })
+        .then(res=> res.json())
+        .then((data)=> {
+            data.forEach(order => {
+            const newOrders = [...this.state.ordersLocations, order]
+            this.setState({ordersLocations: newOrders, ordersLoaded: true})
+        })
+    }, (error) => {
+        this.setState({
+            ordersLoaded: true, error
+        })
+    })
+
+    }
+
 
     renderMap=()=>{
-        if(this.state.userLocation){
+        if(this.state.driverLocation){
             return <MapView style = {styles.map}
-            region = {this.state.userLocation}>
-            <MapView.Marker coordinate = {this.state.userLocation}
-            title = 'you are here'/>
+            region = {this.state.driverLocation}>
+            {this.state.ordersLocations.map(o=>(
+                <MapView.Marker coordinate={o.coords}/>
+            ))}
             </MapView>
         }
     }
@@ -39,12 +70,12 @@ export default class HomeScreen extends React.Component{
         return(
             <View style = {styles.mapContainer}>
                 <View>
+                    <Text>{this.state.ordersLocations.length}</Text>
                     <TouchableOpacity color= '#20603d' onPress={()=>{this.props.navigation.openDrawer()}}>
                         <Text style={styles.menuButton}>Menu</Text>
                     </TouchableOpacity>
                 </View>
                 {this.renderMap()}
-                <Button style = {styles.button} title = 'Place Order' color = '#20603d'onPress = {()=>{this.props.navigation.navigate('SelectItems')}}/>
             </View>
         )
     }

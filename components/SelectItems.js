@@ -42,7 +42,8 @@ export default class SelectItems extends React.Component {
         this.setState({selected: selectedItems.filter(i=>i!==item)});
     }
     loadBundles=()=>{
-        fetch('/bundles', {
+        console.log('test')
+        fetch('http://192.168.1.82:3001/bundles', {
             headers : { 
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -57,6 +58,7 @@ export default class SelectItems extends React.Component {
             this.setState({bundles: newBundles, bundlesLoaded: true})
         })
     }, (error) => {
+        console.log(error)
         this.setState({
             bundlesLoaded: true, error
         })
@@ -82,7 +84,7 @@ export default class SelectItems extends React.Component {
 
     }
     loadAddOns=()=>{
-        fetch('/addOns', {
+        fetch('http://192.168.1.82:3001/addOns', {
             headers : { 
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -129,7 +131,7 @@ export default class SelectItems extends React.Component {
         return(
             <View style={styles.itemsContainer}>
                 <ScrollView style={styles.scrollView}>
-                    <Text>{this.state.selected.length}</Text>
+                    <Text>{this.state.bundles.length}</Text>
                     <Text style={styles.title}>Bundles</Text>
                     {this.renderBundles()}
                     <Text style={styles.title}>Add-Ons ($2 each)</Text>

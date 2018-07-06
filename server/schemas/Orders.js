@@ -1,17 +1,21 @@
 let mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
+// user: {
+//     required: true,
+//     type: String
+// },
 items: {
-required: true,
-type: Array
+    required: true,
+    type: Array
  },
 price: {
-required: true,
-type: String
+    required: true,
+    type: Number
 },
 coords: {
-required: true,
-type: Object
+    required: true,
+    type: Object
 },
 });
 

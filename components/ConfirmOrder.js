@@ -5,9 +5,20 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 export default class ConfirmOrder extends React.Component{
     constructor(props){
         super(props);
+        this.state = {
+            orderLocation: null,
+        }
     }
     static navigationOptions = {
         header: null
+    }
+    componentDidMount(){
+        navigator.geolocation.getCurrentPosition(position => {
+            this.setState({orderLocation:{
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+            }})
+        }, err => {console.log(err)});
     }
     render(){
         const {navigation} = this.props;
@@ -30,13 +41,44 @@ export default class ConfirmOrder extends React.Component{
                     {totalPrice}
                     </Text>
         }
+        
+        placeOrder=()=>{
+            getTotalCart=()=>{
+                let totalPrice = 0;
+            cartParams.forEach((i)=>{
+                    totalPrice += i.price;
+            });
+            return totalPrice;
+            };
+            const coords = this.state.orderLocation;
+            const items = cartParams.map((i)=>{return i.name});
+            const price = getTotalCart()
+           
+            const order = {
+                items: items,
+                price: price,
+                coords: coords
+            };
+            fetch('http://192.168.1.82:3001/orders',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(order)
+            }).then(response=> response.json())
+            .then(alert('Thank you for using Shameless! You will be notified when your order has been received.'))
+            .catch(err=>console.log(err));
+            
+            this.props.navigation.navigate('Home');
+        }
         return(
             <View>
                 <Text>Your Order</Text>
                 {displayCart()}
                 <Text>Total</Text>
                 {getCartTotal()}
-                <TouchableOpacity style={styles.touchableOpacity} onPress={()=>{}}>
+                <TouchableOpacity style={styles.touchableOpacity} onPress={()=>{placeOrder()}}>
                     <Text style={styles.text}>Confirm and Order</Text>
                 </TouchableOpacity>
             </View>

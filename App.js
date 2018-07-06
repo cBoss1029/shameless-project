@@ -11,6 +11,8 @@ import DrawerContainer from './components/DrawerContainer';
 import AuthLoadingScreen from './components/AuthLoadingScreen';
 import SelectItems from './components/SelectItems';
 import ConfirmOrder from './components/ConfirmOrder';
+import DriverHome from './components/DriverHome';
+import DriverDrawerContainer from './components/DriverDrawerContainer';
 
 const AppStack = {
 	Home: {
@@ -30,6 +32,14 @@ const AppStack = {
 	},
 
 };
+const DriverStack = {
+	Home: {
+		screen: DriverHome
+	},
+	Settings: {
+		screen: Settings
+	}
+}
 const AuthStack = StackNavigator({
 	SignIn: {
 		screen: SignIn
@@ -54,6 +64,18 @@ const DrawerRoutes = {
 	},
 	
 };
+const DriverDrawerRoutes = {
+	HomeStack: {
+		name: 'HomeStack',
+		screen: StackNavigator(DriverStack, { initialRouteName: 'Home' })
+	},
+	
+	SettingsStack: {
+		name: 'SettingsStack',
+		screen: StackNavigator(DriverStack, { initialRouteName: 'Settings' })
+	},
+	
+};
 
 const AppNavigator =
 	StackNavigator({
@@ -70,10 +92,26 @@ const AppNavigator =
 			headerMode: 'none'
 		}
 	);
+const DriverNavigator =
+	StackNavigator({
+		Drawer: {
+			name: 'Drawer',
+			screen: DrawerNavigator(
+        	DriverDrawerRoutes,
+			{contentComponent: DriverDrawerContainer},
+			),
+		},
+		...DriverStack
+	},
+		{
+			headerMode: 'none'
+		}
+	);
 	export default SwitchNavigator({
 		AuthLoading: AuthLoadingScreen,
 		App: AppNavigator,
-		Auth: AuthStack
+		Auth: AuthStack,
+		Driver: DriverNavigator,
 	},
 	{
 		initialRouteName: 'AuthLoading',
