@@ -22,6 +22,9 @@ export default class SelectItems extends React.Component {
         }
 
     }
+    static navigationOptions = {
+        header: null
+    }
     componentDidMount(){
         this.loadBundles();
         this.loadAddOns();
@@ -76,24 +79,57 @@ export default class SelectItems extends React.Component {
 
     render(){
         return(
-            <ScrollView style={styles.itemsContainer}>
-                <Text>{this.state.selected.length}</Text>
-                <Text style={styles.title}>Bundles</Text>
-                {this.renderBundles()}
-                <Text style={styles.title}>Add-Ons</Text>
-                {this.renderAddOns()}
-            </ScrollView>
+            <View style={styles.itemsContainer}>
+                <ScrollView style={styles.scrollView}>
+                    <Text>{this.state.selected.length}</Text>
+                    <Text style={styles.title}>Bundles</Text>
+                    {this.renderBundles()}
+                    <Text style={styles.title}>Add-Ons ($2 each)</Text>
+                    {this.renderAddOns()}
+                    <TouchableOpacity style={styles.touchableOpacity} color = '#20603d' onPress={()=>{this.props.navigation.navigate('ConfirmOrder', {cart: this.state.selected})}}>
+                            <Text style={styles.text}>Continue</Text>
+                    </TouchableOpacity>
+                </ScrollView>
+            </View>
         )
     }
 }
 const styles = StyleSheet.create({
     itemsContainer: {
         flex: 1,
+        height: '100%'
 
     },
     title: {
         fontSize: 25,
         borderBottomWidth: 1,
         width: '100%',
+    },
+    touchableOpacity: {
+        borderWidth: 1,
+        borderRadius: 4,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10,
+        width: '100%',
+        marginTop: 10,
+        marginBottom: 20
+        
+    },
+    text: {
+        fontSize: 20,
+    },
+    touchableOpacityContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
+        // height: '50%',
+        margin: 20,
+
+    },
+    scrollView: {
+        margin: 15,
     }
 })

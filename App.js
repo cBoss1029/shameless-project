@@ -10,6 +10,7 @@ import Settings from './components/Settings';
 import DrawerContainer from './components/DrawerContainer';
 import AuthLoadingScreen from './components/AuthLoadingScreen';
 import SelectItems from './components/SelectItems';
+import ConfirmOrder from './components/ConfirmOrder';
 
 const AppStack = {
 	Home: {
@@ -23,6 +24,9 @@ const AppStack = {
 	},
 	SelectItems: {
 		screen: SelectItems
+	},
+	ConfirmOrder: {
+		screen: ConfirmOrder
 	},
 
 };
