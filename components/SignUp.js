@@ -24,13 +24,17 @@ export default class SignUp extends React.Component{
             return false;
         }
     }
-    _signInAsync = async () => {
+    _signUpAsync = async () => {
         const tokenContents = {
             username: this.state.username,
             password: this.state.password
         }
-        await AsyncStorage.setItem('userToken', tokenContents);
-        this.props.navigation.navigate('App');
+        if(this.state.username && this.state.password && this.state.passwordConfirm){
+            await AsyncStorage.setItem('userToken', `${tokenContents}`);
+            this.props.navigation.navigate('App');
+        } else {
+            alert('Please enter a username and password');
+        }
       };
     
     render(){
@@ -42,7 +46,7 @@ export default class SignUp extends React.Component{
                 <TextInput style = {styles.text} onChangeText = {(text) => {this.setState({username: text})}} placeholder = 'Username'></TextInput>
                 <TextInput style = {styles.text} onChangeText = {(text) => {this.setState({password: text})}} placeholder = 'Password' secureTextEntry = {true}></TextInput>
                 <TextInput style = {styles.text} onChangeText = {(text) => {this.setState({passwordConfirm: text})}} placeholder = 'Confirm Password' secureTextEntry = {true}></TextInput>
-                <Button containerViewStyle = {{width: '100%', margin: 0}}color = '#20603d' title = 'Sign Up' onPress = {() =>{if(this.confirmPassword()){this._signInAsync}}}/>
+                <Button containerViewStyle = {{width: '100%', margin: 0}}color = '#20603d' title = 'Sign Up' onPress = {() =>{if(this.confirmPassword()){this._signUpAsync()}}}/>
 
             </View>
         )

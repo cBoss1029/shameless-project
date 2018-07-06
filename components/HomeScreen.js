@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {View, Text, StyleSheet, Button, TouchableOpacity} from 'react-native';
 import MapView from 'react-native-maps';
 
 
@@ -39,8 +39,13 @@ export default class HomeScreen extends React.Component{
     render(){
         return(
             <View style = {styles.mapContainer}>
+                <View>
+                    <TouchableOpacity color= '#20603d' onPress={()=>{this.props.navigation.openDrawer()}}>
+                        <Text style={styles.menuButton}>Menu</Text>
+                    </TouchableOpacity>
+                </View>
                 {this.renderMap()}
-                <Button style = {styles.button} title = 'Place Order' color = '#20603d'onPress = {()=>{this.props.navigation.openDrawer()}}/>
+                <Button style = {styles.button} title = 'Place Order' color = '#20603d'onPress = {()=>{this.props.navigation.navigate('SelectItems')}}/>
             </View>
         )
     }
@@ -52,7 +57,7 @@ const styles = StyleSheet.create({
     },
     map: {
         width: "100%",
-        height: "90%",
+        height: "85%",
         zIndex: -1,
     },
     button: {
@@ -61,8 +66,13 @@ const styles = StyleSheet.create({
         top: 10,
         left: 10,
         width: '100%',
-        height: '10%'
-        
+        height: '10%'  
 
+    },
+    menuButton: {
+        width: '20%',
+        fontSize: 25,
+        zIndex: 2,
+        borderWidth: 1,
     }
 })

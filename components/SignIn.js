@@ -16,8 +16,12 @@ export default class Login extends React.Component{
         header: null
     }
     _signInAsync = async () => {
+        const tokenContents = {
+            username: this.state.username,
+            password: this.state.password
+        }
         if(this.state.username && this.state.password){
-            await AsyncStorage.setItem('userToken', 'abc');
+            await AsyncStorage.setItem('userToken', `${tokenContents}`);
             this.props.navigation.navigate('App');
         } else {
             alert('Please enter username and password');

@@ -1,8 +1,14 @@
 import React from 'react'
-import { StyleSheet, Text, View, AsyncStorage } from 'react-native'
-import { NavigationActions } from 'react-navigation'
+import { StyleSheet, Text, View, AsyncStorage, Switch } from 'react-native'
 
 export default class DrawerContainer extends React.Component {
+  constructor(){
+    super();
+    this.state = {
+      driverToggle: false,
+
+    }
+  }
 
   _signOutAsync = async() =>{
     await AsyncStorage.clear();
@@ -13,22 +19,23 @@ export default class DrawerContainer extends React.Component {
     return (
       <View style={styles.container}>
         <Text
-          onPress={() => navigation.navigate('FirstView')}
+          onPress={() => navigation.navigate('Home')}
           style={styles.uglyDrawerItem}>
           Home
         </Text>
         <Text
-          onPress={() => navigation.navigate('SecondView')}
+          onPress={() => navigation.navigate('Payment')}
           style={styles.uglyDrawerItem}>
           Payment
         </Text>
+        <View style={styles.toggleItem}>
+          <Text style={styles.toggleItemText}>Drive</Text>
+          <Switch value={this.state.driverToggle} onValueChange={()=>{this.setState({
+            driverToggle: !this.state.driverToggle
+          })}}/>
+        </View>
         <Text
-          // onPress={() => navigation.navigate('SecondView')}
-          style={styles.uglyDrawerItem}>
-          Drive
-        </Text>
-        <Text
-          onPress={() => navigation.navigate('ThirdView')}
+          onPress={() => navigation.navigate('Settings')}
           style={styles.uglyDrawerItem}>
           Settings
         </Text>
@@ -37,7 +44,7 @@ export default class DrawerContainer extends React.Component {
           style={styles.uglyDrawerItem}>
           Sign Out
         </Text>
-        
+           
       </View>
     )
   }
@@ -60,5 +67,21 @@ const styles = StyleSheet.create({
     borderColor: '#E73536',
     borderWidth: 1,
     textAlign: 'center'
+  },
+  toggleItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 15,
+    margin: 5,
+    borderRadius: 2,
+    borderColor: '#E73536',
+    borderWidth: 1,
+  },
+  toggleItemText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#E73536',
+
   }
 })

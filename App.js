@@ -9,19 +9,21 @@ import PaymentPrefs from './components/PaymentPrefs';
 import Settings from './components/Settings';
 import DrawerContainer from './components/DrawerContainer';
 import AuthLoadingScreen from './components/AuthLoadingScreen';
+import SelectItems from './components/SelectItems';
+
 const AppStack = {
-	FirstView: {
+	Home: {
 		screen: HomeScreen
 	},
-	SecondView: {
+	Payment: {
 		screen: PaymentPrefs
 	},
-	ThirdView: {
+	Settings: {
 		screen: Settings
 	},
-	// FourthView: {
-	// 	screen: Login
-	// },
+	SelectItems: {
+		screen: SelectItems
+	},
 
 };
 const AuthStack = StackNavigator({
@@ -34,22 +36,18 @@ const AuthStack = StackNavigator({
 })
 
 const DrawerRoutes = {
-	FirstViewStack: {
-		name: 'FirstViewStack',
-		screen: StackNavigator(AppStack, { initialRouteName: 'FirstView' })
+	HomeStack: {
+		name: 'HomeStack',
+		screen: StackNavigator(AppStack, { initialRouteName: 'Home' })
 	},
-	SecondViewStack: {
-		name: 'SecondViewStack',
-		screen: StackNavigator(AppStack, { initialRouteName: 'SecondView' })
+	PaymentStack: {
+		name: 'PaymentStack',
+		screen: StackNavigator(AppStack, { initialRouteName: 'Payment' })
 	},
-	ThirdViewStack: {
-		name: 'ThirdViewStack',
-		screen: StackNavigator(AppStack, { initialRouteName: 'ThirdView' })
+	SettingsStack: {
+		name: 'SettingsStack',
+		screen: StackNavigator(AppStack, { initialRouteName: 'Settings' })
 	},
-	// FourthViewStack: {
-	// 	name: 'FourthViewStack',
-	// 	screen: StackNavigator(AppStack, { initialRouteName: 'FourthView' })
-	// },
 	
 };
 
@@ -77,30 +75,7 @@ const AppNavigator =
 		initialRouteName: 'AuthLoading',
 	}
 );
-// const App = createDrawerNavigator(
-//   {
-//   Home: {
-//     screen: HomeScreen
-//   },
-//   Login: {
-//     screen: Login
-//   }
-// },
-// {
-//   initialRouteName: 'Home',
-//   contentComponent: DrawerContainer,
-//   backBehavior: initialRoute
-// }
-// )
-// export default class App extends React.Component {
-//   render() {
-//     return (
-//       <HomeScreen/>
 
-//     );
-//   }
-// }
-// export default RootNavigator;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
