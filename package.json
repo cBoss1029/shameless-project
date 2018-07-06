@@ -19,9 +19,15 @@
     "preset": "react-native"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.1",
+    "morgan": "^1.9.0",
     "react": "16.3.1",
     "react-native": "~0.55.2",
     "react-native-maps": "^0.21.0",
-    "react-navigation": "^2.3.1"
-  }
+    "react-navigation": "^2.3.1",
+    "uuid": "^3.3.2"
+  },
+  "proxy": "http://localhost:3001"
 }
